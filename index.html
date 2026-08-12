@@ -31,6 +31,9 @@
 
         <div class="card">
           <div class="form-group">
+            <button class="btn small" id="clearBtn" type="button">还原包裹</button>
+          </div>
+          <div class="form-group">
             <label for="sender">寄件人姓名</label>
             <input id="sender" placeholder="请输入寄件人姓名" />
           </div>
@@ -87,7 +90,7 @@
               <button class="btn small" id="copyBtn" type="button">复制</button>
             </div>
             <div style="margin-top:12px;text-align:center;">
-              <button class="btn" id="buildBtn" disabled>生成包裹</button>
+                <button class="btn" id="buildBtn" disabled>生成包裹</button>
             </div>
             <div class="qr-wrap">
               <img id="qrCode" alt="礼物二维码" />
@@ -151,6 +154,8 @@
       { key: 'yongbeijichangqingge', label: '用背脊唱情歌', image: './cd.png', audio: './CDs/yongbeijichangqingge.mp3' },
       { key: 'yueding', label: '约定', image: './cd.png', audio: './CDs/yueding.mp3' },
       { key: 'aiwohaishita', label: '爱我还是他', image: './cd.png', audio: './CDs/aiwohaishita.mp3' },
+      { key: 'daoshishuoaiwo', label: '到时说爱我', image: './cd.png', audio: './CDs/daoshishuoaiwo.mp3' },
+      { key: 'tebiederen', label: '特别的人', image: './cd.png', audio: './CDs/tebiederen.mp3' },
       { key: 'aihenjiandan', label: '爱很简单', image: './cd.png', audio: './CDs/aihenjiandan.mp3' },
       { key: 'shimianmaifu', label: '十面埋伏', image: './cd.png', audio: './CDs/shimianmaifu.mp3' }
     ];
@@ -216,6 +221,29 @@
         cardContent: cardContentInput.value
       };
       localStorage.setItem('virtualGiftDraft', JSON.stringify(draft));
+    }
+
+    function restorePackage() {
+      state.inside = [];
+      placedCard = null;
+      placedCD = null;
+      selectedCD = null;
+      selectedCard = cardTemplates[0].key;
+      senderInput.value = '';
+      recipientInput.value = '';
+      messageInput.value = '';
+      cardContentInput.value = '';
+      hasGenerated = false;
+      saveSelectedCDToStorage();
+      saveDraftToStorage();
+      renderObjects();
+      renderPlacedList();
+      updateCardState();
+      syncBoxImages();
+      if (shareUrlInput) {
+        shareUrlInput.value = '请先生成包裹后再显示链接';
+      }
+      if (qrCodeImg) qrCodeImg.removeAttribute('src');
     }
 
     function loadDraftFromStorage() {
@@ -560,6 +588,14 @@
         console.error(error);
       }
     });
+
+    const restoreBtn = document.getElementById('clearBtn');
+    if (restoreBtn) {
+      restoreBtn.addEventListener('click', () => {
+        if (!confirm('是否要还原包裹')) return;
+        restorePackage();
+      });
+    }
 
     // toggle single inner box open/close by swapping image
     let boxOpen = false;
