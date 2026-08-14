@@ -82,6 +82,8 @@ body {
   justify-content: center;
   overflow: hidden;
 }
+
+.box-controls { position: relative; z-index: 3; }
 .box-stage::before {
   content: '';
   position: absolute;
