@@ -148,7 +148,8 @@
       { key: 'balloon', label: '气球', image: './more/balloon.png' },
       { key: 'bomb', label: '炸弹', image: './more/bomb.png' },
       { key: 'fu', label: '福字', image: './more/fu.png' },
-      { key: 'violet', label: '紫罗兰', image: './more/violet.png' }
+      { key: 'violet', label: '紫罗兰', image: './more/violet.png' },
+      { key: 'bamawater', label: '甄流巴马水', image: './bamawater.png' }
     ];
 
     const cdOptions = [
@@ -195,6 +196,12 @@
         closed: './giftbox.png',
         open: './giftbox_open.png',
         pet: './petgiftbox.png'
+      }
+      ,
+      bamabox: {
+        closed: './bamabox.png',
+        open: './bamabox_open.png',
+        pet: './petbox.png'
       }
     };
     const cdMap = Object.fromEntries(cdOptions.map((cd) => [cd.key, cd]));
