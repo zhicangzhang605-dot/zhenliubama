@@ -646,6 +646,7 @@
       const style = boxStyles[selectedBoxStyle] || boxStyles.classic;
       if (innerBox) innerBox.src = boxOpen ? style.open : style.closed;
       if (innerBox) innerBox.classList.toggle('open', boxOpen);
+      if (innerBox) innerBox.classList.toggle('bamabox', selectedBoxStyle === 'bamabox');
     }
 
     if (innerBox) {

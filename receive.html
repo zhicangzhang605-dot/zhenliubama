@@ -365,6 +365,8 @@
         window.giftBoxStyle = gift.boxStyle || boxStyleParam || gift.style || 'classic';
         const currentStyle = boxStyleMap[window.giftBoxStyle] || boxStyleMap.classic;
         if (giftBoxImg) giftBoxImg.src = currentStyle.closed;
+        // adjust vertical position for bamabox
+        try { if (document.getElementById('giftBox')) document.getElementById('giftBox').classList.toggle('bamabox', (window.giftBoxStyle === 'bamabox')); } catch (e) {}
         const itemRow = document.getElementById('itemRow');
         itemRow.innerHTML = '';
         window.giftItems = gift.items || [];
