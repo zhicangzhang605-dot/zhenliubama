@@ -66,6 +66,9 @@
       background: #f9f6f8;
       object-fit: contain;
     }
+    .style-card:focus { outline: none; }
+    .select-style-btn:focus { outline: none; box-shadow: none; }
+    .select-style-btn { -webkit-tap-highlight-color: transparent; user-select: none; }
     .style-card h2 {
       margin: 0;
       color: #2f2f2f;
@@ -172,8 +175,12 @@
       const card = button.closest('.style-card');
       if (!card) return;
       const selected = card.dataset.style;
+      // blur to avoid leaving focus ring (blue selection) when clicked rapidly
+      try { button.blur(); } catch (e) {}
+      try { if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); } catch (e) {}
       localStorage.setItem(STORAGE_KEY, selected);
-      window.location.href = './index.html';
+      // small timeout to ensure blur takes effect before navigation
+      setTimeout(() => { window.location.href = './index.html'; }, 50);
     });
 
     document.getElementById('cancelBtn').addEventListener('click', () => {
