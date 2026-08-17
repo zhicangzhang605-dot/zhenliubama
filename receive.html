@@ -260,24 +260,8 @@
 
   <script>
     const itemMap = {
-      rose: '<img src="./rose.png" alt="玫瑰" />',
-      bug: '<img src="./bug.png" alt="虫子" />',
-      shit: '<img src="./shit.png" alt="大便" />',
-      firefly: '<img src="./firefly.png" alt="萤火虫" />',
-      confetti: '<img src="./saluting_gun.png" alt="礼炮" />',
-      cake: '<img src="./cake.png" alt="蛋糕" />',
-      orangecat: '<img src="./more/cats/orangecat.png" alt="橘猫" />',
-      graycat: '<img src="./more/cats/graycat.png" alt="灰猫" />',
-      whitecat: '<img src="./more/cats/whitecat.png" alt="白猫" />',
-      cowcat: '<img src="./more/cats/cowcat.png" alt="奶牛猫" />',
-      yellowdog: '<img src="./more/cats/dogs/yellowdog.png" alt="黄色小狗" />',
-      graydog: '<img src="./more/cats/dogs/graydog.png" alt="灰色小狗" />',
-      charliedog: '<img src="./more/cats/dogs/charliedog.png" alt="查理狗" />',
-      balloon: '<img src="./more/balloon.png" alt="气球" />',
-      bomb: '<img src="./more/bomb.png" alt="炸弹" />',
-      fu: '<img src="./more/fu.png" alt="福字" />',
-      violet: '<img src="./more/violet.png" alt="紫罗兰" />',
       bamawater: '<img src="./bamawater.png" alt="甄流巴马水" />',
+      cenpizangcha: '<img src="./cenpizangcha.png" alt="陈皮藏茶" />',
       cd: '<img src="./cd.png" alt="CD" />'
     };
     const boxStyleMap = {
@@ -310,24 +294,8 @@
       }
     };
     const itemNames = {
-      rose: '玫瑰',
-      bug: '虫子',
-      shit: '大便',
-      firefly: '萤火虫',
-      confetti: '礼炮',
-      cake: '蛋糕',
-      orangecat: '橘猫',
-      graycat: '灰猫',
-      whitecat: '白猫',
-      cowcat: '奶牛猫',
-      yellowdog: '黄色小狗',
-      graydog: '灰色小狗',
-      charliedog: '查理狗',
-      balloon: '气球',
-      bomb: '炸弹',
-      fu: '福字',
-      violet: '紫罗兰',
       bamawater: '甄流巴马水',
+      cenpizangcha: '陈皮藏茶',
       cd: 'CD'
     };
     const cdLabels = {
@@ -447,7 +415,7 @@
       if (hasOpened) return;
       hasOpened = true;
       giftBox.classList.add('open');
-      const petKeys = ['orangecat', 'graycat', 'whitecat', 'cowcat', 'yellowdog', 'graydog', 'charliedog'];
+      const petKeys = [];
       const hasPet = (window.giftItems || []).some((item) => petKeys.includes(item));
       const currentStyle = boxStyleMap[window.giftBoxStyle] || boxStyleMap.classic;
       if (giftBoxImg) giftBoxImg.src = hasPet ? currentStyle.pet : currentStyle.open;
