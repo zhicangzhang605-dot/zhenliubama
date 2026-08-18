@@ -131,32 +131,14 @@
     const itemDefinitions = [
       { key: 'bamawater', label: '甄流巴马水', image: './bamawater.png' },
       { key: 'cenpizangcha', label: '陈皮藏茶', image: './cenpizangcha.png' }
+      ,{ key: 'qrcode', label: '二维码', image: './qrcode.jpg' }
     ];
 
     const hiddenItemDefinitions = [];
 
     const cdOptions = [
-      { key: 'qingtian', label: '晴天', image: './cd.png', audio: './CDs/qingtian.mp3' },
-      { key: 'luohualiushui', label: '落花流水', image: './cd.png', audio: './CDs/luohualiushui.mp3' },
-      { key: 'jifenzhiji', label: '几分之几', image: './cd.png', audio: './CDs/jifenzhiji.mp3' },
-      { key: 'kezaiwoxindidemingzi', label: '刻在我心底的名字', image: './cd.png', audio: './CDs/kezaiwoxindidemingzi.mp3' },
-      { key: 'jiushiaini', label: '就是爱你', image: './cd.png', audio: './CDs/jiushiaini.mp3' },
-      { key: 'kgezhiwang', label: 'K歌之王', image: './cd.png', audio: './CDs/kgezhiwang.mp3' },
-      { key: 'jimodejijie', label: '寂寞的季节', image: './cd.png', audio: './CDs/jimodejijie.mp3' },
-      { key: 'aicuo', label: '爱错', image: './cd.png', audio: './CDs/aicuo.mp3' },
-      { key: 'geqian', label: '搁浅', image: './cd.png', audio: './CDs/geqian.mp3' },
-      { key: 'nibawoguanzui', label: '你把我灌醉', image: './cd.png', audio: './CDs/nibawoguanzui.mp3' },
-      { key: 'suiyueruge', label: '岁月如歌', image: './cd.png', audio: './CDs/suiyueruge.mp3' },
-      { key: 'yongbeijichangqingge', label: '用背脊唱情歌', image: './cd.png', audio: './CDs/yongbeijichangqingge.mp3' },
-      { key: 'yueding', label: '约定', image: './cd.png', audio: './CDs/yueding.mp3' },
-      { key: 'aiwohaishita', label: '爱我还是他', image: './cd.png', audio: './CDs/aiwohaishita.mp3' },
-      { key: 'daoshishuoaiwo', label: '到时说爱我', image: './cd.png', audio: './CDs/daoshishuoaiwo.mp3' },
-      { key: 'tebiederen', label: '特别的人', image: './cd.png', audio: './CDs/tebiederen.mp3' },
-      { key: 'huahai', label: '花海', image: './cd.png', audio: './CDs/huahai.mp3' },
-      { key: 'shihao', label: '嗜好', image: './cd.png', audio: './CDs/shihao.mp3' },
-      { key: 'yiluxiangbei', label: '一路向北', image: './cd.png', audio: './CDs/yiluxiangbei.mp3' },
-      { key: 'aihenjiandan', label: '爱很简单', image: './cd.png', audio: './CDs/aihenjiandan.mp3' },
-      { key: 'shimianmaifu', label: '十面埋伏', image: './cd.png', audio: './CDs/shimianmaifu.mp3' }
+      { key: 'floodlight', label: 'Floodlight', image: './cd.png', audio: './CDs/floodlight.mp3' },
+      { key: 'jianxia', label: '简夏', image: './cd.png', audio: './CDs/jianxia.mp3' }
     ];
     const boxStyles = {
       classic: {
@@ -215,6 +197,11 @@
     const placeCardBtn = document.getElementById('placeCardBtn');
     const openCdPickerBtn = document.getElementById('openCdPicker');
     const cdStatus = document.getElementById('cdStatus');
+    const placeQrBtn = document.createElement('button');
+    placeQrBtn.id = 'placeQrBtn';
+    placeQrBtn.className = 'btn small';
+    placeQrBtn.type = 'button';
+    placeQrBtn.textContent = '放入二维码';
     const placeCdBtn = document.createElement('button');
     placeCdBtn.id = 'placeCdBtn';
     placeCdBtn.className = 'btn small';
@@ -444,7 +431,9 @@
       const itemText = formatItemSummary(state.inside.map((i) => i.key));
       const cardText = placedCard ? `；已放入贺卡：${cardMap[placedCard.cardKey].label}` : '';
       const cdText = placedCD ? `；已放入CD：${cdMap[placedCD].label}` : '';
+      const qrText = state.inside.some(i => i.key === 'qrcode') ? '；已放入二维码' : '';
       resultText.innerHTML = `寄件人：${sender || '尚未填写'}<br/>收件人：${recipient || '尚未填写'}<br/>备注：${message || '可选'}<br/>包裹内容：${itemText || '还没有放入任何小物件'}${cardText}${cdText}`;
+      if (qrText) resultText.innerHTML += qrText;
       cdStatus.textContent = selectedCD ? `已选择 CD：${cdMap[selectedCD].label}` : '未选择 CD';
       // place button label reflect state
       if (selectedCD) {
@@ -453,6 +442,10 @@
       } else {
         placeCdBtn.disabled = true;
         placeCdBtn.textContent = '放入包裹';
+      }
+      // update QR button label
+      if (placeQrBtn) {
+        placeQrBtn.textContent = state.inside.some(i => i.key === 'qrcode') ? '已放入包裹（移除）' : '放入二维码';
       }
       updateGenerateState();
     }
@@ -596,6 +589,10 @@
     if (cdStatus && placeCdBtn) {
       cdStatus.parentNode.insertBefore(placeCdBtn, cdStatus.nextSibling);
     }
+    // insert placeQrBtn after the CD button
+    if (cdStatus && placeQrBtn) {
+      cdStatus.parentNode.insertBefore(placeQrBtn, cdStatus.nextSibling);
+    }
     placeCdBtn.addEventListener('click', () => {
       if (!selectedCD) {
         // no selection yet, go to picker
@@ -613,6 +610,23 @@
       saveDraftToStorage();
       renderObjects();
       renderPlacedList();
+      if (hasGenerated) void createShareLink();
+    });
+
+    placeQrBtn.addEventListener('click', () => {
+      const exists = state.inside.some((it) => it.key === 'qrcode');
+      if (exists) {
+        const idx = state.inside.findIndex((it) => it.key === 'qrcode');
+        if (idx !== -1) state.inside.splice(idx, 1);
+      } else {
+        // place qrcode with default position
+        state.inside.push({ key: 'qrcode', x: 10, y: 10 });
+      }
+      saveDraftToStorage();
+      renderObjects();
+      renderPlacedList();
+      // update button label
+      placeQrBtn.textContent = exists ? '放入二维码' : '已放入包裹（移除）';
       if (hasGenerated) void createShareLink();
     });
 

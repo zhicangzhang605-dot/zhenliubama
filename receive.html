@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>你收到一份神秘包裹</title>
+  <title>你收到一份来自甄流巴马的包裹</title>
   <meta property="og:type" content="website" />
   <meta property="og:title" content="你收到了一个包裹" />
   <meta property="og:image" content="https://zhangjingcong140-ux.github.io/virtual-gift/sharecover.png" />
@@ -263,7 +263,8 @@
     const itemMap = {
       bamawater: '<img src="./bamawater.png" alt="甄流巴马水" />',
       cenpizangcha: '<img src="./cenpizangcha.png" alt="陈皮藏茶" />',
-      cd: '<img src="./cd.png" alt="CD" />'
+      cd: '<img src="./cd.png" alt="CD" />',
+      qrcode: '<img src="./qrcode.jpg" alt="二维码" />'
     };
     const boxStyleMap = {
       classic: {
@@ -297,30 +298,12 @@
     const itemNames = {
       bamawater: '甄流巴马水',
       cenpizangcha: '陈皮藏茶',
-      cd: 'CD'
+      cd: 'CD',
+      qrcode: '二维码'
     };
     const cdLabels = {
-      qingtian: '晴天',
-      luohualiushui: '落花流水',
-      jifenzhiji: '几分之几',
-      kezaiwoxindidemingzi: '刻在我心底的名字',
-      jiushiaini: '就是爱你',
-      kgezhiwang: 'K歌之王',
-      jimodejijie: '寂寞的季节',
-      aicuo: '爱错',
-      geqian: '搁浅',
-      nibawoguanzui: '你把我灌醉',
-      suiyueruge: '岁月如歌',
-      yongbeijichangqingge: '用背脊唱情歌',
-      yueding: '约定',
-      aiwohaishita: '爱我还是他',
-      daoshishuoaiwo: '到时说爱我',
-      tebiederen: '特别的人',
-      huahai: '花海',
-      shihao: '嗜好',
-      yiluxiangbei: '一路向北',
-      aihenjiandan: '爱很简单',
-      shimianmaifu: '十面埋伏'
+      floodlight: 'Floodlight',
+      jianxia: '简夏'
     };
 
     function decodeLegacyGiftData(text) {
@@ -467,6 +450,23 @@
         const label = cdLabels[window.giftCd] || 'CD';
         el.innerHTML = `<img src="./cd.png" alt="CD" /><div class="item-label">CD：${label}</div>`;
         itemRow.appendChild(el);
+      }
+      // if qrcode included, render claim area at the bottom
+      const hasQr = (window.giftItems || []).includes('qrcode');
+      // remove existing claim area
+      const existing = document.getElementById('claimQr');
+      if (existing) existing.remove();
+      if (hasQr) {
+        const claim = document.createElement('div');
+        claim.id = 'claimQr';
+        claim.style.marginTop = '18px';
+        claim.style.textAlign = 'center';
+        claim.innerHTML = `
+          <img src="./qrcode.jpg" alt="二维码" style="width:200px;height:200px;object-fit:contain;border-radius:8px;border:1px solid #eee;" />
+          <div style="margin-top:8px;color:#6b7280;">请扫描此二维码,即可到附近门店领取获得的奖品</div>
+        `;
+        const container = document.querySelector('.gift-card') || document.body;
+        container.appendChild(claim);
       }
       if (!chips.length && !window.giftCard && !window.giftCd) return;
 
