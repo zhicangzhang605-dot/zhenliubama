@@ -20,7 +20,7 @@
       place-items: center;
       padding: 24px;
       box-sizing: border-box;
-      background: linear-gradient(135deg, #fff7f0 0%, #ffe6ef 45%, #f8f8ff 100%);
+      background: linear-gradient(135deg, #f0fbff 0%, #e6f6ff 45%, #f8fbff 100%);
       color: #2f2f2f;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
@@ -82,7 +82,8 @@
       to { transform: translateX(-50%) rotate(360deg); }
     }
     .gift-box img { width: 100%; height: 100%; object-fit: contain; }
-    .gift-box.bamabox { transform: translateY(-60px); }
+    /* Keep bamabox at original position; push following content down to avoid overlap */
+    .gift-box.bamabox { margin-bottom: 100px; }
     .message-card {
       margin: 14px 0 10px;
       padding: 12px;

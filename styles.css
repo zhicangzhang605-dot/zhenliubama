@@ -2,14 +2,14 @@
   color-scheme: light;
   --pink: #ff5f8a;
   --pink-deep: #d63f63;
-  --cream: #fff7f0;
+  --cream: #f0fbff;
   --ink: #2b2b2b;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  background: radial-gradient(circle at top, #fff7f0 0%, #ffe6ef 45%, #f8f8ff 100%);
+  background: radial-gradient(circle at top, #f0fbff 0%, #e6f6ff 45%, #f8fbff 100%);
   color: var(--ink);
   min-height: 100vh;
 }
