@@ -325,8 +325,8 @@ textarea { min-height: 82px; resize: vertical; }
 .inner-box.open { transform: translateX(-50%) translateY(-6px); }
 
 /* Special positioning for bamabox to avoid covering text */
-.inner-box.bamabox { bottom: 60px; }
-.inner-box.bamabox.open { transform: translateX(-50%) translateY(-20px); }
+.inner-box.bamabox { bottom: 140px; }
+.inner-box.bamabox.open { transform: translateX(-50%) translateY(-40px); }
 
 .items-layer { position: absolute; inset: 0; z-index: 2; }
 
