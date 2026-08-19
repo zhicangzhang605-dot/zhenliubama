@@ -223,6 +223,13 @@
     .loading-overlay.hidden {
       display: none;
     }
+    /* Expand overlay for bamabox so it fully covers the larger box image */
+    .gift-box.bamabox .loading-overlay {
+      inset: -40px;
+      z-index: 90;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.9);
+    }
     .gift-box.loading {
       pointer-events: none;
     }
@@ -235,7 +242,6 @@
   </style>
 </head>
 <body>
-  <a href="./index.html" class="top-left-btn">制作包裹</a>
   
   <div class="gift-card">
     <div class="gift-title">你收到一份神秘包裹</div>
